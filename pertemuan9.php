@@ -8,8 +8,8 @@
 <body>  
 
 <?php
-$nameErr = $nimErr = $emailErr = "";
-$name = $nim = $email = "";
+$nameErr = $nimErr = $emailErr = $alamatErr = "";
+$name = $nim = $email = $alamat = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($_POST["name"])) {
@@ -38,6 +38,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $emailErr = "Email tidak valid";
     }
   }
+
+  if (empty($_POST["alamat"])) {
+    $alamatErr = "Alamat harus diisi";
+  } else {
+    $alamat = test_input($_POST["alamat"]);
+  }
 }
 
 function test_input($data) {
@@ -48,43 +54,51 @@ function test_input($data) {
 }
 ?>
 
-<h2>FORM SEDERHANA DENGAN PHP</h2>
-<p><span class="error">* Field tidak boleh kosong</span></p>
+<div class="container">
+  <h2>FORM SEDERHANA DENGAN PHP</h2>
+  <p><span class="error">* Field tidak boleh kosong</span></p>
 
-<?php
-//nilai default ku
-echo "<h3>Default Values:</h3>";
-echo "NIM: 22090098<br>";
-echo "Nama: M.Ilham Rigan Agachi<br>";
-echo "";
-?>
+  <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
+    <label for="name">Name:</label>
+    <input type="text" name="name" value="<?php echo $name;?>">
+    <span class="error">* <?php echo $nameErr;?></span>
+    <br><br>
 
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
-  Name: <input type="text" name="name" value="<?php echo $name;?>">
-  <span class="error">* <?php echo $nameErr;?></span>
-  <br><br>
-  NIM: <input type="text" name="nim" value="<?php echo $nim;?>">
-  <span class="error">* <?php echo $nimErr;?></span>
-  <br><br>
-  E-mail: <input type="text" name="email" value="<?php echo $email;?>">
-  <span class="error">* <?php echo $emailErr;?></span>
-  <br><br>
-  <input type="submit" name="submit" value="Submit">  
-</form>
+    <label for="nim">NIM:</label>
+    <input type="text" name="nim" value="<?php echo $nim;?>">
+    <span class="error">* <?php echo $nimErr;?></span>
+    <br><br>
 
-<?php
-//M.Ilham Rigan Agachi
-echo "<h2>Data anda:</h2>";
-echo "Name: " . $name;
-echo "<br>";
-echo "NIM: " . $nim;
-echo "<br>";
-echo "Email: " . $email;
-?>
+    <label for="email">E-mail:</label>
+    <input type="text" name="email" value="<?php echo $email;?>">
+    <span class="error">* <?php echo $emailErr;?></span>
+    <br><br>
 
+    <label for="alamat">Alamat:</label>
+    <textarea name="alamat" rows="5" cols="40"><?php echo $alamat;?></textarea>
+    <span class="error">* <?php echo $alamatErr;?></span>
+    <br><br>
 
+    <input type="submit" name="submit" value="Submit">  
+  </form>
+
+  <?php
+  echo "<h2>Data anda:</h2>";
+  echo "Name: " . $name;
+  echo "<br>";
+  echo "NIM: " . $nim;
+  echo "<br>";
+  echo "Email: " . $email;
+  echo "<br>";
+  echo "Alamat: " . $alamat;
+  ?>
+
+  <h3>Nilai Default:</h3>
+  <p>NIM: 22090098<br>
+  Nama: M.Ilham Rigan Agachi<br>
+  Email: ilhamrigan22@gmail.com<br>
+  Alamat: Tegal</p>
+</div>
 
 </body>
 </html>
-
-
